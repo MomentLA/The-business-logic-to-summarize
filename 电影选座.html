@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>电影选座</title>
+		<style type="text/css">
+			* {
+				box-sizing: border-box;
+			}
+			html,body {
+				height: 100%;
+			}
+			body {
+				margin: 0;
+			}
+			h4 {
+				text-align: center;
+				color:gray;
+			}
+			#container{
+				width: 500px;
+				height: 500px;
+				margin: 0 auto;
+				background-color: lemonchiffon;
+				position: relative;
+			}
+			div.cover {
+				border:3px solid red;
+			}
+			button {
+				display: block;	
+				width: 500px;
+				height: 40px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h4>放映屏幕</h4>
+		<main id="container">
+		</main>
+		<button onclick="mySubmit()">提交</button>
+		<script type="text/javascript">
+			var main = document.querySelector('main');
+			var arr = [];
+			for (var i = 0;i < 9; i++) {
+				for (var k = 0; k < 9; k++) {
+					var div = document.createElement('div');
+					main.appendChild(div);
+					div.style.width = '50px';
+					div.style.height = '50px';
+					div.style.backgroundColor = 'greenyellow';
+					div.style.textAlign = 'center';
+					div.style.lineHeight = '50px';
+					div.style.color = 'gray';
+					div.style.position = 'absolute';
+					div.style.left = 5 + (50 + 5) * i + 'px';
+					div.style.top = 5 + (50 + 5 ) * k + 'px';
+					div.innerHTML = k * 9 + i + 1;
+					//每创建一个div，就对应的创建一个object对象
+					arr.push({
+						isCover:false,
+						positionNum:0,
+					})
+					//设置id属性的值为标题数字
+					div.id = k * 9 + i + 1;
+					div.onclick = function(){
+						//alert('xxxxx' + this.id);
+						var index = this.id;
+						var obj = arr[index - 1];
+						if (obj.isCover) {
+							this.className = '';
+							//obj.isCover = 'false';
+							obj.positionNum = 0;
+						} 
+						else{
+							this.className = 'cover';
+							//obj.isCover = 'true';
+							obj.positionNum = index;
+						}
+						//优化,将obj的isCover取反，再赋给obj的isCover
+						obj.isCover = !obj.isCover;
+					}
+				}
+			}
+			function mySubmit(){
+				var tempStr = '';
+				for (var i = 0; i < arr.length; i++) {
+					var obj = arr[i];
+					if (obj.positionNum != 0) {
+						tempStr = tempStr + obj.positionNum + '号';
+					}
+				}
+				var str = '你选中了：\n' + tempStr;
+				alert(str);
+			}
+		</script>
+	</body>
+</html>

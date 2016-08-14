@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-2.2.4.js"></script>
+    <style>
+        * {
+            padding:0;
+            margin:0;
+            border:0;
+            list-style: none;
+        }
+        section {
+            margin:50px auto;
+            width:1000px;
+            height:409px;
+            position:relative;
+            overflow: hidden;
+        }
+        .main {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        .main li {
+            position:absolute;
+            left:0;
+            top:0;
+            opacity:0;
+        }
+        .main li img{
+            width:1000px;
+            height:409px;
+        }
+        .main .current {
+            opacity: 1;
+        }
+        .one {
+            width:45px;
+            height:45px;
+            background:url(img/l.png);
+            background-repeat: no-repeat;
+            position:absolute;
+            top:190px;
+            left:10px;
+            z-index: 100;
+        }
+        .two {
+            width:45px;
+            height:45px;
+            background:url(img/r.png);
+            background-repeat: no-repeat;
+            position:absolute;
+            top:190px;
+            right:10px;
+            z-index: 100;
+        }
+        .list {
+            width:1000px;
+            height:10px;
+            position:absolute;
+            bottom:15px;
+            z-index: 100;
+        }
+        .list ul {
+            width:120px;
+            margin:0 auto;
+        }
+        .list ul li {
+            width:10px;
+            height:10px;
+            border-radius:10px;
+            float:left;
+            margin:0 5px;
+            background:white;
+        }
+        .list ul .control {
+            background:orangered;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="one"></div>
+    <div class="two"></div>
+    <div class="list">
+        <ul>
+            <li class="control"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="main">
+        <ul>
+            <li class="current"><img src="img/1.jpg"/></li>
+            <li><img src="img/2.jpg"/></li>
+            <li><img src="img/3.jpg"/></li>
+            <li><img src="img/4.jpg"/></li>
+            <li><img src="img/5.jpg"/></li>
+        </ul>
+    </div>
+</section>
+</body>
+</html>
+<script>
+    $(function(){
+        var timer;
+        var b = 0;
+        var dd;
+        console.log($('img'));
+        function show(a){
+            var index = a
+            $('.list ul li').each(function(index){
+                this.className= '';
+                $('.main ul li').eq(index).css('opacity','0');
+            })
+            $('.list ul li').eq(index).addClass('control');
+           //$('.main ul li').eq(index).addClass('current');
+            $('.main ul li').eq(index).animate({opacity:1},500);
+        }
+        $('.list ul li').each(function(index){
+            $(this).mouseover(function(){
+                clearInterval(timer);
+                show(index);
+            })
+            $(this).mouseout(function(){
+                b = index;
+                autoPLay();
+            })
+        })
+        $('.two').click(function(){
+            clearInterval(timer);
+            b++;
+            if(b == $('.list ul li').length){
+                b = 0;
+            }
+            show(b);
+        })
+        $('.two').mouseout(function(){
+            autoPLay();
+        })
+        $('.one').click(function(){
+            clearInterval(timer);
+            if(b == $('.list ul li').length){
+                b = $('.list ul li').length;
+            }
+            b--;
+            show(b);
+        })
+        $('.one').mouseout(function(){
+            autoPLay();
+        })
+
+        function autoPLay(){
+            clearInterval(dd);
+            timer = setInterval(function(){
+                b++;
+                if(b == $('.list ul li').length){
+                    b = 0;
+                }
+                show(b);
+            },2000)
+        }
+        autoPLay();
+
+    })
+</script>

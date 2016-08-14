@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jquery图片切换带缩略图片滚动切换</title>
+    <meta name="description" content="jquery图片切换效果，制作一个通过小图缩略图点击切换显示相应的大图，当缩略图过多时可以点击左右按钮控制缩略图片左右滚动，进行更多的图片切换。" />
+</head>
+
+<body>
+
+<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+
+<style>
+    *{margin:0;padding:0;list-style-type:none;}
+    a,img{border:0;}
+    body{font:12px/180% Arial, Helvetica, sans-serif,"宋体";}
+    /* zoombox */
+    .zoombox{width:686px;margin:20px auto 0 auto;}
+    .zoompic{border:solid 1px #dfdfdf;width:684px;height:394px;background:url(images/loading.gif) no-repeat 50% 50%;}
+
+    .sliderbox{height:76px;overflow:hidden;margin:6px 0 0 0;}
+    .sliderbox .arrow-btn{width:38px;height:76px;background:url(images/arrow-btn.png) no-repeat;cursor:pointer;}
+    .sliderbox #btn-left{float:left;background-position:0 0;}
+    .sliderbox #btn-left.dasabled{background-position:0 -76px;}
+    .sliderbox #btn-right{float:right;background-position:-38px 0;}
+    .sliderbox #btn-right.dasabled{background-position:-38px -76px;}
+    .sliderbox .slider{float:left;height:76px;width:605px;position:relative;overflow:hidden;margin:0 0 0 3px;display:inline;}
+    .sliderbox .slider ul{position:absolute;left:0;width:999em;}
+    .sliderbox .slider li{float:left;width:121px;height:76px;text-align:center;}
+    .sliderbox .slider li img{border:solid 1px #dfdfdf;}
+    .sliderbox .slider li.current img{border:solid 1px #3366cc;}
+</style>
+
+<div class="zoombox">
+
+    <div class="zoompic"><img src="images/3427.jpg" width="684" height="394" alt="美女配奥迪A4L墙纸" /></div>
+
+    <div class="sliderbox">
+        <div id="btn-left" class="arrow-btn dasabled"></div>
+        <div class="slider" id="thumbnail">
+            <ul>
+                <li class="current"><a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a></li>
+                <li><a href="images/52347.jpg" target="_blank"><img src="images/41a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸02" /></a></li>
+                <li><a href="images/23463.jpg" target="_blank"><img src="images/234fa.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸03" /></a></li>
+                <li><a href="images/3247.jpg" target="_blank"><img src="images/412saf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸04" /></a></li>
+                <li><a href="images/26547.jpg" target="_blank"><img src="images/41356a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸05" /></a></li>
+                <li><a href="images/2153.jpg" target="_blank"><img src="images/432sadf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸06" /></a></li>
+                <li><a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a></li>
+            </ul>
+        </div>
+        <div id="btn-right" class="arrow-btn"></div>
+    </div>
+
+</div><!--slider end-->
+
+
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        $("#thumbnail li a").click(function(){
+
+            $(".zoompic img").hide().attr({"src":$(this).attr("href"),"title":$("> img",this).attr("title")
+            });
+            $("#thumbnail li.current").removeClass("current");
+            $(this).parents("li").addClass("current");return false});
+        $(".zoompic>img").load(function(){$(".zoompic>img:hidden").show()});var $slider=$('.slider ul');
+        var $slider_child_l=$('.slider ul li').length;
+        var $slider_width=$('.slider ul li').width();
+        $slider.width($slider_child_l*$slider_width);
+        var slider_count=0;
+        if($slider_child_l<5){$('#btn-right').css({cursor:'auto'});
+            $('#btn-right').removeClass("dasabled")
+        }
+        $('#btn-right').click(function(){if($slider_child_l<5||slider_count>=$slider_child_l-5){return false}slider_count++;
+            $slider.animate({left:'-='+$slider_width+'px'},'fast');slider_pic()});
+        $('#btn-left').click(function(){if(slider_count<=0){return false}slider_count--;
+            $slider.animate({left:'+='+$slider_width+'px'},'fast');slider_pic()});
+        function slider_pic(){if(slider_count>=$slider_child_l-5){$('#btn-right').css({cursor:'auto'});
+            $('#btn-right').addClass("dasabled")}else if(slider_count>0&&slider_count<=$slider_child_l-5){$('#btn-left').css({cursor:'pointer'});
+            $('#btn-left').removeClass("dasabled");$('#btn-right').css({cursor:'pointer'});
+            $('#btn-right').removeClass("dasabled")}else if(slider_count<=0){$('#btn-left').css({cursor:'auto'});
+            $('#btn-left').addClass("dasabled")}}});
+</script>

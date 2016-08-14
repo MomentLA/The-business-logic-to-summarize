@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>星级评分</title>
+    <script src="jquery-2.0.3.js"></script>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+        html,body,ul,img,li{
+            margin:0;
+            padding:0;
+            border:0;
+            font-size:14px;
+        }
+        li{
+            list-style:none;
+        }
+        .main{
+            width:800px;
+            margin:20px auto;
+        }
+        .main > span{
+            font-size:20px;
+            line-height:30px;
+        }
+        img{
+            width:30px;
+            height:30px;
+            background-image:url(img/star.png);
+            background-repeat:no-repeat;
+            background-size:100%;
+            background-position:0 0;
+        }
+        .main ul:nth-of-type(1){
+            display:inline-block;
+            width:300px;
+            height:30px;
+            line-height:30px;
+            position:relative;
+        }
+        .main ul:nth-of-type(1) li{
+            font-size:18px;
+            position:absolute;
+            left:10px;
+            top:0;
+            display:none;
+        }
+        .main ul:nth-of-type(2){
+            position:relative;
+        }
+        .main ul:nth-of-type(2) li{
+            position:absolute;
+            top:0;
+            display:none;
+        }
+        .main ul span{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div class="main">
+        <span>点击星星就能打分</span>
+        <img>
+        <img>
+        <img>
+        <img>
+        <img>
+        <ul>
+            <li><span>1分</span>(很不满意差的太离谱)</li>
+            <li><span>2分</span>(不满意部分有破损)</li>
+            <li><span>3分</span>(一般质量一般)</li>
+            <li><span>4分</span>(满意质量不错)</li>
+            <li><span>5分</span>(非常满意质量非常好)</li>
+        </ul>
+        <ul>
+            <li><span>1分 很不满意</span><br>差的太离谱</li>
+            <li><span>2分 不满意</span><br>部分有破损</li>
+            <li><span>3分 一般</span><br>质量一般</li>
+            <li><span>4分 满意</span><br>质量不错</li>
+            <li><span>5分 非常满意</span><br>质量非常好</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(function(){
+        var u2li = $('#wrapper .main ul:nth-of-type(2) li');
+        var u1li = $('#wrapper .main ul:nth-of-type(1) li');
+        var oimg = $('#wrapper .main img');
+        oimg.each(function(index){
+            $(this).mouseover(function(){
+                u2li.eq(index).css('display','block').css('left',(index+5)*30 + 'px');
+                oimg.slice(0,index+1).css('backgroundPositionY','-45px');
+                oimg.slice(index+1,5).css('backgroundPositionY','0');
+            });
+            $(this).click(function(){
+                u1li.css('display','none');
+                u1li.eq(index).css('display','block');
+                u2li.css('display','none');
+                oimg.slice(0,index+1).css('backgroundPositionY','-45px');
+                return result = index;
+            });
+                $(this).mouseout(function(){
+                    u2li.css('display','none');
+                    oimg.css('backgroundPositionY','0');
+                    oimg.slice(0,result+1).css('backgroundPositionY','-45px');
+                    oimg.slice(result+1,5).css('backgroundPositionY','0');
+                });
+        })
+    })
+</script>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding:0;
+            margin:0;
+            border:0;
+            list-style: none;
+        }
+        section {
+            margin:50px auto;
+            width:1000px;
+            height:409px;
+            position:relative;
+            overflow: hidden;
+        }
+        .main {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        .main li {
+            position:absolute;
+            left:0;
+            top:0;
+            opacity:0;
+        }
+        .main .current {
+            opacity: 1;
+        }
+        .one {
+            width:45px;
+            height:45px;
+            background:url(img/l.png);
+            background-repeat: no-repeat;
+            position:absolute;
+            top:190px;
+            left:10px;
+            z-index: 100;
+        }
+        .two {
+            width:45px;
+            height:45px;
+            background:url(img/r.png);
+            background-repeat: no-repeat;
+            position:absolute;
+            top:190px;
+            right:10px;
+            z-index: 100;
+        }
+        .list {
+            width:1000px;
+            height:10px;
+            position:absolute;
+            bottom:15px;
+            z-index: 100;
+        }
+        .list ul {
+            width:120px;
+            margin:0 auto;
+        }
+        .list ul li {
+            width:10px;
+            height:10px;
+            border-radius:10px;
+            float:left;
+            margin:0 5px;
+            background:white;
+
+        }
+        .list ul .control {
+            background:orangered;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="one"></div>
+    <div class="two"></div>
+    <div class="list">
+        <ul>
+            <li class="control"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="main">
+        <ul>
+            <li class="current"><img src="img/1.jpg"/></li>
+            <li><img src="img/2.jpg"/></li>
+            <li><img src="img/3.jpg"/></li>
+            <li><img src="img/4.jpg"/></li>
+            <li><img src="img/5.jpg"/></li>
+        </ul>
+    </div>
+</section>
+</body>
+</html>
+<script>
+    window.onload = function(){
+        var one = document.querySelector('.one');
+        var two = document.querySelector('.two');
+        var liOne = document.querySelectorAll('.list ul li');
+        var liTwo = document.querySelectorAll('.main ul li');
+        var img = document.querySelectorAll('img');
+        var timer;
+        var b = 0;
+        var dd;
+        var opa;
+
+        function show(a){
+            var index = a;
+            for(var i=0;i<liOne.length;i++){
+                liOne[i].className = '';
+                liTwo[i].className = '';
+            }
+            liOne[index].className = 'control';
+            liTwo[index].className = 'current';
+            dd = setInterval(function(){
+                //淡入淡出
+                  opa += 0.2;
+                img[index].style.opacity = opa;
+                if(opa == 1){
+                    clearInterval(dd);
+                    opa = 0;
+                }
+            },50);
+        }
+        //先写手动
+        for(var i=0;i<liOne.length;i++){
+            liOne[i].index = i;
+            liOne[i].onmouseover = function(){
+                show(this.index);
+                clearInterval(timer);
+            }
+            liOne[i].onmouseout = function(){
+                b = this.index
+                autoPLay();
+            }
+        }
+        two.onclick = function(){
+            clearInterval(timer);
+            b++;
+                if(b == liOne.length){
+                    b = 0;
+                }
+            show(b);
+        }
+        two.onmouseout = function(){
+            autoPLay();
+        }
+        one.onclick = function(){
+            clearInterval(timer);
+            if(b == 0){
+                b = liOne.length;
+            }
+            b--;
+            show(b);
+        }
+        one.onmouseout = function(){
+            autoPLay();
+        }
+        function autoPLay(){
+            clearInterval(dd);
+            timer = setInterval(function(){
+                b++;
+                if(b == liOne.length){
+                    b = 0;
+                }
+                show(b);
+            },2000)
+        }
+        autoPLay();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+</script>

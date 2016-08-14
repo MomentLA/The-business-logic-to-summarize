@@ -1,0 +1,88 @@
+ <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>缩略图</title>
+    <link rel="stylesheet" type="text/css" href="case.css">
+    <script src="jquery-2.0.3.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="maxImage">
+        <img src="../images/3427.jpg">
+    </div>
+    <div id = minImage>
+        <div id="btn-left" class="arrow-btn dasabled"> </div>
+       <!--<div class="clear"></div>-->
+        <div id="min">
+            <ul>
+                <li class="current"><a href="../images/3427.jpg" target="_blank"><img src="../images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a></li>
+                <li><a href="../images/52347.jpg" target="_blank"><img src="../images/41a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸02" /></a></li>
+                <li><a href="../images/23463.jpg" target="_blank"><img src="../images/234fa.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸03" /></a></li>
+                <li><a href="../images/3247.jpg" target="_blank"><img src="../images/412saf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸04" /></a></li>
+                <li><a href="../images/26547.jpg" target="_blank"><img src="../images/41356a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸05" /></a></li>
+                <li><a href="../images/2153.jpg" target="_blank"><img src="../images/432sadf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸06" /></a></li>
+                <li><a href="../images/3427.jpg" target="_blank"><img src="../images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a></li>
+            </ul>
+        </div>
+        <!--<div class="clear"></div>-->
+        <div id="btn-right"  class="arrow-btn dasabled"></div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(function(){
+        $('#min li a').click(function(){
+            $('#maxImage img').hide().attr({'src':$(this).attr('href')});
+            $('#min li .current').removeClass('current');
+            $(this).parents('li').addClass('current').siblings().removeClass('current');
+            return false;
+        });
+        $('#maxImage > img').load(function(){
+            $('#maxImage > img:hidden').show();
+        });
+        var $minImage = $('#min ul');
+        var $minImage_child = $('#min ul li').length;
+        var $minImage_width = $('#min ul li').width();
+        $minImage.width($minImage_child*$minImage_width);
+        var $minImage_count=0;
+        if($minImage_child<5){
+            $('#btn-right').css({cursor:'auto'});
+            $('#btn-right').removeClass('dasabled');
+        }
+        $('#btn-right').click(function(){
+            if($minImage_child<5||$minImage_count>=$minImage_child-5){
+                return false;
+            }
+            $minImage_count++;
+            $minImage.animate({left:'-='+$minImage_width+'px'},'fast');
+            show();
+        })
+        $('#btn-left').click(function(){
+            if($minImage_count<=0){
+                return false;
+            }
+            $minImage_count--;
+            $minImage.animate({left:'+=' + $minImage_width + 'px'},'fast');
+            show();
+        })
+        function show(){
+            if($minImage_count>=$minImage_child-5){
+                $('#btn-right').css({cursor:'auto'});
+                $('#btn-right').addClass('dasabled');
+            }else if($minImage_count>0&&$minImage_count<=$minImage_child-5){
+                $('#btn-left').css({cursor:'pointer'});
+                $('#btn-right').addClass('dasabled');
+                $('#btn-left').removeClass('dasabled');
+                $('#btn-right').css({cursor:'pointer'});
+                $('#btn-right').removeClass('dasabled');
+            }else if($minImage_count<=0){
+                $('#btn-left').css({cursor:'auto'});
+                $('#btn-left').addClass('dasabled');
+            }
+        }
+
+    })
+
+
+</script>

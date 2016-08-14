@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最简单的图片滚动</title>
+    <script src="jquery-2.0.3.js"></script>
+    <style>
+        * {
+            box-sizing:border-box;
+        }
+        html,body,div,ul,li,figure,figcaption{
+            margin: 0;
+            padding:0;
+            border:0;
+            font-size:14px;
+        }
+        ul li{
+            list-style:none;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+      #wrapper {
+          width:720px;
+          height:240px;
+          margin: 20px auto;
+      }
+      .first {
+          width:40px;
+          height: 40px;
+          position:absolute;
+          left:560px;
+          top:80px;
+      }
+      .next {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          right: 650px;
+          top:80px;
+
+      }
+      #box {
+          width:640px;
+          height:200px;
+          position: relative;
+          overflow: hidden;
+      }
+        #box ul {
+            position: absolute;
+            width:2240px;
+            height:160px ;
+            left:0px;
+        }
+        #box ul li {
+            width:160px;
+            height:160px ;
+            float:left;
+        }
+        #box ul li a img {
+            width:160px;
+            height:160px;
+        }
+        #box ul li a span{
+            display: block;
+            width:160px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div class="first">
+        <img src="img/aa.png">
+    </div>
+    <div class="next">
+        <img src="img/bb.png">
+    </div>
+    <div id="box">
+        <ul>
+            <li>
+               <a href="#">
+                   <img src="img/1.jpg">
+                   <span>高级程序设计</span>
+               </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/2.jpg">
+                    <span>编程艺术</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/3.jpg">
+                    <span>权威指南</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/4.jpg">
+                    <span>框架设计</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/5.jpg">
+                    <span>数据结构与算法</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/6.jpg">
+                    <span>权威教程</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/7.jpg">
+                    <span>编程实战</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/8.jpg">
+                    <span>高性能</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/9.jpg">
+                    <span>深入浅出</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/10.jpg">
+                    <span>响应式布局</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/11.jpg">
+                    <span>JQueryMobile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/12.jpg">
+                    <span>富应用开发</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/13.jpg">
+                    <span>数据结构与算法教程</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/14.jpg">
+                    <span>EcmaScript6</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(function(){
+        var $box = $('#box ul');
+        var $child = $('#box ul li').length;
+
+        var $_width = $('#box ul li').width();
+       // console.log($_width);
+        console.log($box.width($child*$_width));
+        var $box_count =0;
+        $('.next').click(function(){
+            if($child<4||$box_count>=$child-4){return false}
+            $box_count++;
+            $box.animate({left:'-='+$_width+'px'},'fast');
+            show();
+        })
+        $('.first').click(function(){
+            if($box_count<=0){return false}
+            $box_count--;
+            $box.animate({left:'+='+$_width+'px'},'fast');
+            show();
+        })
+        function show(){
+            if($box_count>=$child-4){
+                $('.next').css({cursor:'auto'});
+            }else if($box_count>0&&$box_count<=$child-4){
+                $('.first').css({cursor:'pointer'});
+                $('.next').css({cursor:'pointer'});
+            }else if($box_count<=0){
+                $('.first').css({cursor:'auto'});
+            }
+        }
+    })
+
+</script>

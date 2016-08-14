@@ -1,0 +1,72 @@
+/*缩略图的所有样式*/
+* {
+    box-sizing:border-box;
+}
+html,body,div,ul,li {
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:14px;
+}
+#wrapper {
+    width:686px;
+    margin:20px auto;
+}
+#maxImage {
+    width:684px;
+    height:394px;
+    background: url(../images/loading.gif);
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
+}
+#minImage .arrow-btn {
+    width:38px;
+    height:76px;
+    background: url(../images/arrow-btn.png);
+    background-repeat: no-repeat;
+}
+#minImage #btn-left {
+    float:left;
+    background-position: 0 0;
+}
+#minImage #btn-left.dasabled{
+    background-position: 0 -76px;
+}
+#minImage #btn-right {
+    float: right;
+    background-position: -38px 0;
+}
+#minImage #btn-right.dasabled {
+    background-position: -38px -76px;
+}
+#minImage #min {
+    float:left;
+    height:76px;
+    width:605px;
+    position:relative;
+    overflow: hidden;
+    margin: 0 0 0 3px;
+    display: inline;
+}
+#minImage #min ul {
+    position:absolute;
+    left:0;
+    width:999em;
+}
+#minImage #min ul li {
+    float:left;
+    width:121px;
+    height:76px;
+    text-align: center;
+}
+#minImage #min ul li img {
+    border:1px solid #dfdfdf;
+}
+#minImage #min ul li.current img{
+    border:1px solid #3366cc;
+}
+
+
+
+
+
